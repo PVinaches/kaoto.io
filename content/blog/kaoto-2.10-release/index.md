@@ -103,9 +103,7 @@ After extensive testing and refinement, drag and drop has graduated from experim
 
 - **Canvas Layout Direction** - Choose between horizontal and vertical layout orientations to match your workflow preferences and screen real estate
 
-{{< figure src="layout01.png" alt="Vertical layout" caption="Vertical layout" class="image" >}}
-
-{{< figure src="Layout02.png" alt="Horizontal layout" caption="Horizontal layout" class="image" >}}
+{{< figure src="layout-settings.png" alt="Layout Settings" caption="Layout Settings" class="image" >}}
 
 - **Undo/Redo Improvements** - Nodes properly re-render after undo and redo operations, ensuring visual consistency
 
@@ -149,6 +147,8 @@ Kaoto 2.10 includes support for:
 - **Camel extensions for Quarkus** - 3.32.0, 3.27.2
 
 - **Camel Spring Boot** - 4.18.0, 4.14.5
+
+For a full list of changes please refer to the [change log.](https://github.com/KaotoIO/kaoto/releases/tag/2.10.0)
 
 ## Let’s Build it Together
 
