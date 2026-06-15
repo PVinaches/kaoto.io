@@ -19,7 +19,13 @@ This release brings significant enhancements to testing capabilities with Citrus
 
 ### Citrus Testing Capabilities
 
-Kaoto 2.11 introduces comprehensive Citrus framework integration, bringing automated testing capabilities directly into your visual integration design workflow. Build and manage Citrus tests alongside your Apache Camel routes, ensuring your integrations work correctly through behavior-driven testing.
+Kaoto 2.11 introduces comprehensive [Citrus framework](http://citrusframework.org) integration, bringing automated testing capabilities directly into your visual integration design workflow. Build and manage Citrus tests alongside your Apache Camel routes, ensuring your integrations work correctly through behavior-driven testing.
+
+**Why Citrus?**
+
+Citrus is an Open Source Java test framework with focus on messaging and enterprise integration scenarios. Citrus has evolved as a perfect match for testing Apache Camel integrations as it provides first class integration with Camel on multiple levels such as Camel JBang support, Camel infra services support, Camel data format and transformation capabilities and much more. In addition to that Citrus also provides multiple test DSLs (Java, YAML) that match the Camel offerings.
+
+The Kaoto catalog has been enhanced with Citrus-specific components and schemas including test-actions, endpoints, functions, and validation-matcher components, providing a comprehensive testing toolkit directly within the visual editor.
 
 **Visual Test Design**
 
@@ -36,9 +42,9 @@ Kaoto 2.11 introduces comprehensive Citrus framework integration, bringing autom
 
 - **Citrus Endpoint Configuration** - Specialized configuration fields for Citrus Endpoints, providing a streamlined interface for defining test endpoints with proper protocols and message formats
 - **Standard Property Forms** - Configure test actions using Kaoto's familiar property forms, maintaining consistency with how you configure Camel components
-- **YAML/XML Serialization** - Tests are serialized to standard Citrus YAML or XML format, making them portable and compatible with the broader Citrus ecosystem
+- **YAML Serialization** - Tests are serialized to standard Citrus YAML format, making them portable and compatible with the broader Citrus ecosystem
 
-{{< figure src="test-forms.png" alt="Configuration form for Citrus test actions" caption="Citrus test action configuration using Kaoto property forms" class="image" >}}
+{{< figure src="test-endpoints.png" alt="Citrus test endpoints in the component catalog" caption="Citrus test endpoints available in Kaoto catalog" class="image" >}}
 
 **Integrated Testing Workflow**
 
