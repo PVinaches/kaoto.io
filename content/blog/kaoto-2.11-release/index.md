@@ -7,6 +7,7 @@ authors:
   - igarashitm
   - PVinaches
   - djelinek
+  - mmelko
 tags:
   - Kaoto
   - Release
@@ -90,36 +91,37 @@ The DataMapper has received substantial improvements for handling complex data t
 
 Kaoto DataMapper rendering engine has been re-invented to be enterprise-grade — with virtual scrolling and browser-native rendering, you can flawlessly navigate through large data mappings with complex document schema structures.
 
----Video for complex mapping with scrolling
-
 **Advanced Schema Support**
-- **Field Override** - Support for overriding a document field or its type where it's compatible. Complex XML schema uses `Substitution Group` to allow element substitution, and `xs:extension`/`xs:restriction` to declare hierarchical type definitions. Kaoto DataMapper now offers to leverage this extensibility where the schema definition allows. Right-clicking on the document field offers override options
-- **Abstract Elements** - An abstract element now shows its substitution candidates as children in the document tree, enabling direct mapping from/to the substituted fields
-- **Choice Improvements** - Enhanced `xs:choice` support with dedicated context menu for choosing from choice options. Right-clicking on the document field offers choice options
 
----Video for choice improvements
+- **Field Override** - Support for overriding a document field or its type where it's compatible. Complex XML schema uses `Substitution Group` to allow element substitution, and `xs:extension`/`xs:restriction` to declare hierarchical type definitions. Kaoto DataMapper now offers to leverage this extensibility where the schema definition allows. Right-clicking on the document field offers override options
+- **Abstract Elements** - An abstract element now shows its substitution candidates as children in the document tree, enabling direct mapping from/to the substituted fields. The Field Override modal dialog and context menu make it easy to substitute abstract fields with concrete implementations
+
+{{< youtube id="G_O4BEXYqec" class="video" title="DataMapper Field Override - Substituting Abstract Fields" >}}
+
+- **Choice Improvements** - Enhanced `xs:choice` support with dedicated context menu for choosing from choice options. Right-clicking on the document field offers choice options. This works even for nested choices — you can drill down and select the exact branch you need at any level
+
+{{< youtube id="2cQ2RC5G3l8" class="video" title="DataMapper Choice Selection - Navigate Complex Choice Elements" >}}
 
 - **Nillable Attributes** - Support for `xs:element nillable` attribute, properly handling nullable fields as declared in the XML schema
 - **And more to come...** We continue working on improving complex document/mapping support. Further improvements to Abstract Elements support are on the way
 
 **UI/UX Improvements**
+
 - **Auto Mapping** - Several auto mapping options through Drag and Drop have been added:
   - Source collection field to target collection field: `for-each` mapping is automatically created
   - Container field to Container field: Automatically creates appropriate mappings, it either uses `xsl:copy-of` or creates mappings for individual children
 - **Double-Click Editing** - If you're familiar with XPath, just double-click the target field and write the XPath expression right away
-
----Video for editing
-
 - **Delete Key Support** - Delete data mapping item by pressing the Delete key for faster workflow
+
+{{< youtube id="CyD8PnidEm0" class="video" title="DataMapper UI/UX Improvements - Auto Mapping, Double-Click Editing, and Delete Key" >}}
+
 - Allow renaming XSLT file associated with Kaoto DataMapper step
 - Allow to collapse the function list in XPath editor
 - Highlight the selected field border, not only its title
 
 **Other XSLT improvements**
-- **XSLT Comments** - Ability to add comments into generated XSLT for better documentation. Once a comment is added, a comment icon appears on the mapping element — hover over it to see the comment in a tooltip
+- **XSLT Comments** - Add documentation comments to your XSLT transformations for better maintainability. Right-click on any mapping element and select "Add Comment" to document the purpose or logic of that transformation. Once a comment is added, a comment icon appears on the mapping element — hover over it to see the comment in a tooltip. This makes it easier for team members to understand complex transformations
 - Added `exclude-result-prefixes` to generated XSLT to prevent namespace leakage into transformed target XML instance
-
----Video for ccomments
 
 ### Canvas and Visual Editor Enhancements
 
