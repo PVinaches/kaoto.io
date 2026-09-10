@@ -1,0 +1,45 @@
+{{/*
+  roadmap-container shortcode
+  Wraps all roadmap-card shortcodes in the timeline container.
+  Also injects the roadmap CSS exactly once (scoped to this shortcode output).
+
+  Usage:
+    {{< roadmap-container >}}
+      {{< roadmap-card ... >}}
+    {{< /roadmap-container >}}
+*/}}
+<style>
+h1 { text-align: center; }
+
+/* --- Layout --- */
+.roadmap-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    padding-left: 60px;
+}
+.roadmap-timeline {
+    position: absolute;
+    left: 30px;
+    top: 0;
+    width: 5px;
+    background: lightgray;
+    height: 100%;
+}
+
+/* --- Page description --- */
+.roadmap-description {
+    text-align: center;
+    font-style: italic;
+    color: #555;
+    font-weight: bold;
+    font-size: 1em;
+    padding-bottom: 20px;
+}
+</style>
+
+<div class="roadmap-container">
+  <div class="roadmap-timeline"></div>
+  {{ .Inner }}
+</div>

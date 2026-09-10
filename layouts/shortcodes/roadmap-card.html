@@ -1,0 +1,213 @@
+{{/*
+  roadmap-card shortcode
+
+  Parameters:
+    status        - (optional) "wip" | "completed" | "" (default: no status)
+    icon          - path to the icon image (e.g. "./images/bug.png")
+    badge         - (optional) "FINAL" | "PREVIEW"
+    preview-icon  - (optional) path to the preview/lab icon shown when badge="FINAL"
+                    (triggers the animated unboxing effect)
+    title         - card heading text
+    description   - card body text
+    delivery-time - delivery time label (e.g. "Q3 / 2026")
+*/}}
+
+{{ if not ($.Page.Store.Get "roadmap-card-css") }}
+{{ $.Page.Store.Set "roadmap-card-css" true }}
+<style>
+/* --- Badges --- */
+.roadmap-badge {
+    display: inline-block;
+    font-size: 0.6em;
+    font-weight: bold;
+    color: #fff;
+    background: rgb(0, 121, 60);
+    border-radius: 4px;
+    padding: 1px 6px;
+    vertical-align: middle;
+    margin-left: 8px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.roadmap-badge--preview {
+    background: #7b5ea7;
+    animation: previewPulse 2s ease-in-out infinite;
+}
+@keyframes previewPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(123, 94, 167, 0.6); }
+    50%       { box-shadow: 0 0 0 5px rgba(123, 94, 167, 0); }
+}
+
+/* --- Card base --- */
+.roadmap-card {
+    display: flex;
+    align-items: center;
+    border: 3px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+.roadmap-card.wip       { border-color: rgb(255, 166, 0); }
+.roadmap-card.completed { border-color: #4CAF50; }
+
+/* --- Card icon --- */
+.roadmap-card .icon {
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
+}
+
+/* --- Card content --- */
+.roadmap-card .content      { flex: 1; }
+.roadmap-card .content h3   { margin: 0 !important; font-size: 1.2em; font-weight: bold; line-height: 1.4; }
+.roadmap-card .content p    { margin: 10px 0; font-size: 0.8em; }
+.roadmap-card .content .delivery-time {
+    font-style: italic;
+    color: #555;
+    font-weight: bold;
+    font-size: 0.8em;
+    text-align: right;
+    padding-right: 10px;
+}
+
+/* --- Timeline connector dot --- */
+.roadmap-card::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 5px solid lightgray;
+    background: lightgray;
+}
+/* --- Timeline connector line --- */
+.roadmap-card::after {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 19px;
+    height: 2px;
+    background: lightgray;
+    border: 3px solid lightgray;
+}
+.roadmap-card.wip::before       { background: rgb(255, 166, 0); border-color: rgb(255, 166, 0); left: -40px; }
+.roadmap-card.wip::after        { background: rgb(255, 166, 0); border-color: rgb(255, 166, 0); }
+.roadmap-card.completed::before { background: #4CAF50; border-color: #4CAF50; left: -40px; }
+.roadmap-card.completed::after  { background: #4CAF50; border-color: #4CAF50; }
+
+/* --- Animated icon unboxing (PREVIEW → FINAL) --- */
+.icon-unboxing-container {
+    position: relative;
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    margin-right: 40px;
+}
+.icon-unboxing-container div,
+.icon-unboxing-container svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+/*
+  Full cycle: 4s total
+    0–20%   (0–0.8s)  preview explodes out
+    20–40%  (0.8–1.6s) burst flash
+    40–75%  (1.6–3.0s) final icon visible (hold)
+    75–100% (3.0–4.0s) final icon fades out → reset for next loop
+*/
+.icon-preview { animation: explodeOut 4s ease-in-out infinite; }
+.icon-final   { opacity: 0; animation: revealFinal 4s ease-in-out infinite; }
+.icon-unboxing-container::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 10px; height: 10px;
+    background: radial-gradient(circle, #ff5722 0%, #ffeb3b 60%, transparent 100%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    animation: burst 4s ease-out infinite;
+}
+@keyframes explodeOut {
+    0%   { transform: scale(1) rotate(0deg); opacity: 1; }
+    6%   { transform: scale(1.2) rotate(-10deg); opacity: 1; }
+    12%  { transform: scale(1.5); opacity: 1; }
+    20%  { transform: scale(0); opacity: 0; }
+    75%  { transform: scale(0); opacity: 0; }
+    85%  { transform: scale(1) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes burst {
+    0%   { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    18%  { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    25%  { opacity: 1; }
+    35%  { transform: translate(-50%, -50%) scale(4); opacity: 0.8; }
+    45%  { transform: translate(-50%, -50%) scale(6); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+}
+@keyframes revealFinal {
+    0%,  20% { transform: scale(0); opacity: 0; }
+    40%      { transform: scale(1.15); opacity: 1; }
+    50%      { transform: scale(1); opacity: 1; }
+    75%      { transform: scale(1); opacity: 1; }
+    85%      { transform: scale(0); opacity: 0; }
+    100%     { transform: scale(0); opacity: 0; }
+}
+</style>
+{{ end }}
+
+{{ $status       := .Get "status" }}
+{{ $icon         := .Get "icon" }}
+{{ $badge        := .Get "badge" }}
+{{ $previewIcon  := .Get "preview-icon" }}
+{{ $title        := .Get "title" }}
+{{ $description  := .Get "description" }}
+{{ $deliveryTime := .Get "delivery-time" }}
+
+{{ $cardClass := "roadmap-card" }}
+{{ if eq $status "wip" }}
+  {{ $cardClass = "roadmap-card wip" }}
+{{ else if eq $status "completed" }}
+  {{ $cardClass = "roadmap-card completed" }}
+{{ end }}
+
+<div class="{{ $cardClass }}">
+
+  {{/* Icon area — animated unboxing when badge=FINAL and preview-icon is set */}}
+  {{ if and (eq $badge "FINAL") $previewIcon }}
+    <div class="icon-unboxing-container">
+      <div class="icon icon-final" style="background-image: url('{{ $icon }}');"></div>
+      <div class="icon icon-preview" style="background-image: url('{{ $previewIcon }}');"></div>
+    </div>
+  {{ else }}
+    <div class="icon" style="background-image: url('{{ $icon }}');"></div>
+  {{ end }}
+
+  <div class="content">
+    <h3>
+      {{- $title -}}
+      {{ if $badge }}
+        <span class="roadmap-badge{{ if eq $badge "PREVIEW" }} roadmap-badge--preview{{ end }}">{{ $badge }}</span>
+      {{ end }}
+    </h3>
+    <p>{{ $description }}</p>
+    <div class="delivery-time">{{ $deliveryTime }}</div>
+  </div>
+
+</div>
